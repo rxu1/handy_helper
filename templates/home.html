@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"> -->
+    <style>
+        #create{
+            box-shadow: 0px 3px 3px 0px #090909;
+            padding: 3px;
+            color: black;
+            text-decoration: none;
+        }
+        #logout{
+            margin-right: 100px;
+            text-decoration: underline;
+        }
+        a{
+            text-decoration: underline;
+        }
+        #delete{
+            display: inline-block;
+            background: none;
+            border: none;
+            color: blue;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Hello {{context.user.name}}!</h2>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/logout" id="logout">Logout</a>
+                <a id="create" href="/job/new">New job!!</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Job's Available:</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Job</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Actions</th>
+                            <th scope="col">User ID</th>
+                            <th scope="col">Job ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in context2.jobs %}
+                            <tr>
+                                <td>{{job['title']}}</td>
+                                <td>{{job['location']}}</td>
+                                <td>
+                                    <!-- add an action that passes job_id throught the url i.e. /job['job_id'] -->
+                                    <a href="/job/{{job['jobs.id']}}">View</a> |
+                                    <!-- jinja conditional where edit and delete button only show up for user creator -->
+                                    <!-- <a href="/job/edit/{{job['id']}}">Edit</a>
+                                    |
+                                    <form action="/delete/{{job['id']}}" method="POST" style="display: inline-block;">
+                                        <input id="delete" type="submit" value="Delete" name="delete">
+                                    </form> -->
+                                </td>
+                                <td>{{job['user_id']}}</td>
+                                <td>{{job['jobs.id']}}</td>
+                            </tr>
+                        {% endfor %}
+
+                        {% for user in context3.user %}
+                            <tr>
+                                <td>{{user['title']}}</td>
+                                <td>{{user['location']}}</td>
+                                <td>
+                                    <!-- add an action that passes job_id throught the url i.e. /job['job_id'] -->
+                                    <a href="/job/{{user['jobs.id']}}">View</a> |
+                                    <!-- jinja conditional where edit and delete button only show up for user creator -->
+                                    <a href="/job/edit/{{user['jobs.id']}}">Edit</a>
+                                    |
+                                    <form action="/delete/{{user['jobs.id']}}" method="POST" style="display: inline-block;">
+                                        <input id="delete" type="submit" value="Delete" name="delete">
+                                    </form>
+                                </td>
+                                <td>{{user['id']}}</td>
+                                <td>{{user['jobs.id']}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>

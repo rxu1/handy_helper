@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"> -->
+    <style>
+        #description{
+            vertical-align: top;
+        }
+        form{
+            display: inline-block;
+        }
+        a{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Hello {{context.user.name}}! Create a job!</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/home">Home</a>
+                <a href="/logout" style="text-decoration: underline;">Logout</a>
+            </div>
+            <div class="col-*-*"></div>
+        </div>
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+            {% if messages %}                            <!-- check if there are any messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p style="color:red">{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="row">
+            <div class="col-md-6">
+                <!-- add action and method to form -->
+                <form action="/job/submit" method="POST">
+                    <div class="form-group">
+                        <label for="title" class="form-horizontal" style="display: inline-block">Title:</label>
+                        <input type="text" class="form-horizontal" class="form-control" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description" id="description">Description:</label>
+                        <textarea name="description" id="plan" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" class="form-horizontal" class="form-control" name="location">
+                    </div>
+                    <!-- black belt you can add categories and allow users to add category -->
+                    <a href="/home" class="badge badge-light">Cancel</a>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
